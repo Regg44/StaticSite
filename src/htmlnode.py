@@ -31,6 +31,8 @@ class LeafNode(HTMLNode):
             raise ValueError("All leaf notes must have a value")
         if self.tag == None:
             return self.value
+        if self.tag == "img":
+            return f"<{self.tag}{self.props_to_html()}>{self.value}"
         else:
             return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
     
