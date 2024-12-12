@@ -1,6 +1,7 @@
 from main import *
 from htmlnode import HTMLNode, LeafNode, ParentNode
 from textnode import TextNode, TextType
+from nodes_delim import split_nodes_delimiter
 
 import unittest
 
@@ -41,6 +42,32 @@ class functiontest(unittest.TestCase):
         self.assertEqual(text_node_to_html_node(self.tobj5).to_html(), self.obj5.to_html())
     def test10(self):
         self.assertEqual(text_node_to_html_node(self.tobj6).to_html(), self.obj6.to_html())
+
+
+    #we are going to create TextNode objects to test split_nodes_delimiter()
+    # Said test are going to test the creation of TextNodes inside the list, and no more. 
+    # That Would be pretty complext to test.
+
+    sobj = [TextNode("This is a *bold* test. We are going to use this single object o to **manifest** several smaller objects. or `code examples`", TextType.TEXT)]
+    sobj2 = split_nodes_delimiter(sobj, "*", TextType.BOLD)
+    sobj3 = split_nodes_delimiter(sobj2, "**", TextType.ITALIC)
+    sobj4 = split_nodes_delimiter(sobj3, "`", TextType.CODE)
+    def test11(self):
+        print(self.sobj)
+        self.assertIsInstance(self.sobj, list)
+    def test12(self):
+        print(self.sobj2)
+        self.assertIsInstance(self.sobj2, list)
+    def test13(self):
+        print(self.sobj3)
+        self.assertIsInstance(self.sobj3, list)
+    def test14(self):
+        print(self.sobj4)
+        self.assertIsInstance(self.sobj4, list)  
+    
+
+
+        
 
 
 
