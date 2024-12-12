@@ -64,7 +64,11 @@ class functiontest(unittest.TestCase):
     def test14(self):
         print(self.sobj4)
         self.assertIsInstance(self.sobj4, list)  
-    
+    print(sobj)
+    print(sobj2)
+    print(sobj3)
+    print(sobj4)
+
 
 
         
