@@ -1,6 +1,5 @@
 import unittest
-from extract_link import extract_markdown_links, extract_markdown_images
-from link_split import split_nodes_images, split_nodes_links
+from link_split import split_nodes_images, split_nodes_links, extract_markdown_images, extract_markdown_links
 from main import TextNode, TextType
 
 class regex_test(unittest.TestCase):

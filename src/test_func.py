@@ -63,18 +63,26 @@ class functiontest(unittest.TestCase):
         self.assertIsInstance(self.sobj3, list)
     def test14(self):
         print(self.sobj4)
-        self.assertIsInstance(self.sobj4, list)  
-    print(sobj)
-    print(sobj2)
-    print(sobj3)
-    print(sobj4)
+        self.assertIsInstance(self.sobj4, list)
 
-
-
-        
-
-
-
+    # Here we are going to write tests for the main function that transforms text into nodes.
+    def test15(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        node_list = [
+        TextNode("This is ", TextType.TEXT),
+        TextNode("text", TextType.BOLD),
+        TextNode(" with an ", TextType.TEXT),
+        TextNode("italic", TextType.ITALIC),
+        TextNode(" word and a ", TextType.TEXT),
+        TextNode("code block", TextType.CODE),
+        TextNode(" and an ", TextType.TEXT),
+        TextNode("obi wan image", TextType.IMAGES, "https://i.imgur.com/fJRm4Vk.jpeg"),
+        TextNode(" and a ", TextType.TEXT),
+        TextNode("link", TextType.LINKS, "https://boot.dev"),
+        ]
+        self.assertEqual(text_to_textnodes(text), node_list)
+    def test16(self):
+        self.assertEqual(text_to_textnodes("This is just a normal text with no shabang"), [TextNode("This is just a normal text with no shabang", TextType.TEXT)])
 
 if __name__ == "__main__":
     unittest.main()
