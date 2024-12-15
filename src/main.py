@@ -2,6 +2,7 @@ from textnode import TextType, TextNode
 from htmlnode import HTMLNode, LeafNode, ParentNode
 from nodes_delim import split_nodes_delimiter
 from link_split import split_nodes_images, split_nodes_links, extract_markdown_images, extract_markdown_links
+from markdown_blocks import *
 def main():
     obj1 = TextNode("So, we are cooking, or nah...?", TextType.BOLD, "https://www.bootdev.com/")
     print(obj1)
@@ -36,23 +37,18 @@ def text_to_textnodes(text):
         split_nodes_images(
             split_nodes_delimiter(
                 split_nodes_delimiter(
-                    split_nodes_delimiter([TextNode(text, TextType.TEXT)], "**", TextType.BOLD), "*", TextType.ITALIC), "`", TextType.CODE
+                    split_nodes_delimiter([TextNode(text, TextType.TEXT)], "**", TextType.BOLD), "*", TextType.ITALIC), "```", TextType.CODE
                 )
             )
         )
 
+def markdown_to_html_node(markdown):
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        block_type = block_to_block_type(block)
+        new_HTML = HTMLNode(block_type, block, )
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 main()

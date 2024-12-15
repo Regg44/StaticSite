@@ -1,6 +1,5 @@
 import unittest
-from markdown_blocks import markdown_to_blocks
-from markdown_blocks import block_to_block_type
+from markdown_blocks import markdown_to_blocks, block_to_block_type, BlockType
 
 
 
@@ -49,27 +48,27 @@ it should return one block, no more""")
         self.assertEqual(markdown_to_blocks(text), comparator)
     def test4(self):
         case1 = "#this is a heading"
-        self.assertEqual(block_to_block_type(case1), "heading")
+        self.assertEqual(block_to_block_type(case1), BlockType.HEADING)
     def test5(self):
         case2 = "```this is code```"
-        self.assertEqual(block_to_block_type(case2), "code")
+        self.assertEqual(block_to_block_type(case2), BlockType.CODE)
     def test6(self):
         case3 = "* this is a list\n* with several \n* lines"
-        self.assertEqual(block_to_block_type(case3), "unordered_list")
+        self.assertEqual(block_to_block_type(case3), BlockType.ULIST)
     def test7(self):
         case4 = "3. This is another list\n4. But instead of unordered\n5. ordered"
-        self.assertEqual(block_to_block_type(case4), "ordered_list")
+        self.assertEqual(block_to_block_type(case4), BlockType.OLIST)
     def test8(self):
         case5 = "This should just return text"
-        self.assertEqual(block_to_block_type(case5), "paragraph")
+        self.assertEqual(block_to_block_type(case5), BlockType.PARAGRAPH)
     def test9(self):
-        item = ("* This should also return a paragraph\n- As the delimiters are different\n* for the start of the lines","paragraph")
+        item = ("* This should also return a paragraph\n- As the delimiters are different\n* for the start of the lines",BlockType.PARAGRAPH)
         self.assertEqual(block_to_block_type(item[0]), item[1])
     def test10(self):
-        item = ("7. This should return\n9. A paragraph aswell","paragraph")
+        item = ("7. This should return\n9. A paragraph aswell",BlockType.PARAGRAPH)
         self.assertEqual(block_to_block_type(item[0]), item[1])
     def test11(self):
-        item = ("12. This should return\n13. ordered list though","ordered_list")
+        item = ("12. This should return\n13. ordered list though",BlockType.OLIST)
         self.assertEqual(block_to_block_type(item[0]), item[1])
     
         

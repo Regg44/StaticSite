@@ -24,7 +24,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         
 
 
-sobj = TextNode("This is a *bold* test. We are going to use this single object o to **manifest** several smaller objects. or `code examples`", TextType.TEXT)
+sobj = TextNode("This is a *bold* test. We are going to use this single object o to **manifest** several smaller objects. or ```code examples```", TextType.TEXT)
 print(split_nodes_delimiter([sobj], "*", TextType.BOLD))
 
 print(["hi", "lol", "xd"])

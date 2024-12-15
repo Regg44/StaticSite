@@ -67,7 +67,7 @@ class functiontest(unittest.TestCase):
 
     # Here we are going to write tests for the main function that transforms text into nodes.
     def test15(self):
-        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        text = "This is **text** with an *italic* word and a ```code block``` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
         node_list = [
         TextNode("This is ", TextType.TEXT),
         TextNode("text", TextType.BOLD),
