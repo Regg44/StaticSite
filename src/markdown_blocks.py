@@ -7,8 +7,9 @@ class BlockType(Enum):
     HEADING = "heading"
     CODE = "code"
     QUOTE = "quote"
-    OLIST = "unordered_list"
     ULIST = "ordered_ list"
+    OLIST = "unordered_list"
+    
 
 # This function will grab a greater piece of text and split it into blocks for our code to handle:
 def markdown_to_blocks(text):
@@ -23,7 +24,7 @@ def markdown_to_blocks(text):
 # This function is to detect the type of each block
 def block_to_block_type(block):
     blocks = block.split("\n")
-    if block.startswith("#"):
+    if "#" in block.split(" ", maxsplit=1)[0] and len(block.split(" ", maxsplit=1)[0]) <= 6 and len(block.split(" ", maxsplit=1)[0]) >= 1:
         return BlockType.HEADING
     elif block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
