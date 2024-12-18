@@ -89,18 +89,5 @@ def markdown_to_html_node(markdown):
         page.append(block_to_parentnode(block))
     return ParentNode("html", page)
 
-text = (""" ### This is a heading
-
-This is a paragraph of text. It has some **bold** and *italic* words inside of it.
-
-* Now what should this be?
-* Unordered list that is
-* Now what in the actual hell?
-
-1. Now this is ordered
-2. so it should print like so""")
-                
-print(markdown_to_html_node(text).to_html())
-    
 
 main()
