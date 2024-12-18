@@ -3,6 +3,7 @@ from htmlnode import HTMLNode, LeafNode, ParentNode
 from nodes_delim import split_nodes_delimiter
 from link_split import split_nodes_images, split_nodes_links, extract_markdown_images, extract_markdown_links
 from markdown_blocks import BlockType, markdown_to_blocks, block_to_block_type
+from src_to_dest import src_to_dest
 def main():
     obj1 = TextNode("So, we are cooking, or nah...?", TextType.BOLD, "https://www.bootdev.com/")
     print(obj1)
@@ -89,5 +90,5 @@ def markdown_to_html_node(markdown):
         page.append(block_to_parentnode(block))
     return ParentNode("html", page)
 
-
+src_to_dest("/home/kendall/workspace/github.com/Regg44/StaticSite/static", "/home/kendall/workspace/github.com/Regg44/StaticSite/public")
 main()
