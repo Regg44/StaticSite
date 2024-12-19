@@ -39,7 +39,7 @@ def text_to_textnodes(text):
         split_nodes_images(
             split_nodes_delimiter(
                 split_nodes_delimiter(
-                    split_nodes_delimiter([TextNode(text, TextType.TEXT)], "**", TextType.BOLD), "*", TextType.ITALIC), "```", TextType.CODE
+                    split_nodes_delimiter([TextNode(text, TextType.TEXT)], "**", TextType.BOLD), "*", TextType.ITALIC), "`", TextType.CODE
                 )
             )
         )
@@ -60,7 +60,7 @@ def block_to_parentnode(block):
             children = []
             for txtnode in text_to_textnodes(block):
                 children.append(text_node_to_html_node(txtnode))
-            return ParentNode("p", children)
+            return ParentNode("code", children)
         case BlockType.QUOTE:
             children = []
             for txtnode in text_to_textnodes(block.strip("> ")):
@@ -115,9 +115,21 @@ def generate_page(from_path, template_path, dest_path):
         os.makedirs(os.path.dirname(dest_path))
     open(dest_path, mode="w").write(new_html)
 
+def generate_pages_recursively(dir_path_content, template_path, dest_dir_path):
+    if os.path.isdir(dir_path_content):
+        entries = os.listdir(dir_path_content)
+    
+    for entry in entries:
+        entry_path = os.path.join(dir_path_content, entry)
+        destin_path = os.path.join(dest_dir_path, entry)
+        if entry.endswith(".md"):
+            generate_page(entry_path, template_path, destin_path.replace(".md", ".html"))
+        elif os.path.isdir(entry_path):
+            os.mkdir(destin_path)
+            generate_pages_recursively(entry_path, template_path, destin_path)
 def initiate():
     src_to_dest("/home/kendall/workspace/github.com/Regg44/StaticSite/static", "/home/kendall/workspace/github.com/Regg44/StaticSite/public")
-    generate_page("/home/kendall/workspace/github.com/Regg44/StaticSite/content/index.md", "/home/kendall/workspace/github.com/Regg44/StaticSite/template.html", "/home/kendall/workspace/github.com/Regg44/StaticSite/public/index.html")
+    generate_pages_recursively("/home/kendall/workspace/github.com/Regg44/StaticSite/content/", "/home/kendall/workspace/github.com/Regg44/StaticSite/template.html", "/home/kendall/workspace/github.com/Regg44/StaticSite/public/")
 
 
 initiate()
