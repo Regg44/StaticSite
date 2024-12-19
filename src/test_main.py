@@ -29,6 +29,19 @@ This is a paragraph of text. It has some **bold** and *italic* words inside of i
         print(html)
         self.assertEqual(raw_html, html)
     
+    def test2(self):
+        markdown = """So this is life
+not going to lie, its pretty
+pretty as in beauty
+that can be the title
+
+# BEAUTY
+
+## SUBTITLE IS BEAUTY AGAIN
+
+# any subsequen title is a minor title h1"""
+        self.assertEqual(extract_title(markdown), "BEAUTY")
+    
 
 if __name__ == "__main__":
     unittest.main()

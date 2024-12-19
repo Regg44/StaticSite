@@ -4,6 +4,7 @@ from nodes_delim import split_nodes_delimiter
 from link_split import split_nodes_images, split_nodes_links, extract_markdown_images, extract_markdown_links
 from markdown_blocks import BlockType, markdown_to_blocks, block_to_block_type
 from src_to_dest import src_to_dest
+import os
 def main():
     obj1 = TextNode("So, we are cooking, or nah...?", TextType.BOLD, "https://www.bootdev.com/")
     print(obj1)
@@ -59,10 +60,10 @@ def block_to_parentnode(block):
             children = []
             for txtnode in text_to_textnodes(block):
                 children.append(text_node_to_html_node(txtnode))
-            return ParentNode("```", children)
+            return ParentNode("p", children)
         case BlockType.QUOTE:
             children = []
-            for txtnode in text_to_textnodes(block):
+            for txtnode in text_to_textnodes(block.strip("> ")):
                 children.append(text_node_to_html_node(txtnode))
             return ParentNode("blockquote", children)
         case BlockType.ULIST:
@@ -90,5 +91,34 @@ def markdown_to_html_node(markdown):
         page.append(block_to_parentnode(block))
     return ParentNode("html", page)
 
-src_to_dest("/home/kendall/workspace/github.com/Regg44/StaticSite/static", "/home/kendall/workspace/github.com/Regg44/StaticSite/public")
+
+def extract_title(markdown):
+    lines = markdown.split("\n")
+    for line in lines:
+        if line.startswith("# "):
+            return line.strip("# ")
+        continue
+    raise Exception("No Header 1 titles in markdown")
+
+def generate_page(from_path, template_path, dest_path):
+    print(f"Processing the creationg of page from source {from_path}, to {dest_path}, using {template_path}")
+    
+    markdown_text = open(from_path, mode='r').read()
+    template = open(template_path, mode='r').read()
+
+    HTML_string = markdown_to_html_node(markdown_text).to_html()
+    title = extract_title(markdown_text)
+
+    new_html = template.replace("{{ Title }}", title).replace("{{ Content }}", HTML_string)
+    print(new_html)
+    if not os.path.exists(os.path.dirname(dest_path)):
+        os.makedirs(os.path.dirname(dest_path))
+    open(dest_path, mode="w").write(new_html)
+
+def initiate():
+    src_to_dest("/home/kendall/workspace/github.com/Regg44/StaticSite/static", "/home/kendall/workspace/github.com/Regg44/StaticSite/public")
+    generate_page("/home/kendall/workspace/github.com/Regg44/StaticSite/content/index.md", "/home/kendall/workspace/github.com/Regg44/StaticSite/template.html", "/home/kendall/workspace/github.com/Regg44/StaticSite/public/index.html")
+
+
+initiate()
 main()
